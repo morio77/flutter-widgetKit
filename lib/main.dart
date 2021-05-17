@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
@@ -24,6 +25,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  static const _methodChannel = MethodChannel('work.hondakenya.flutterWidgetkit/sample');
   var _counter = 0;
 
   Future<void> _incrementCounter() async {
@@ -34,7 +36,18 @@ class _MyHomePageState extends State<MyHomePage> {
 
     // 更新後のカウンターをshared_preferencesで保存
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setInt('count', _counter);
+    await prefs.setInt('counter', _counter);
+
+    // Swiftへメソッド実行を依頼(通知)する（counterの値を保存する）
+    try {
+      final result = await _methodChannel.invokeMethod('setCounterForWidgetKit');
+      print(result);
+    } on PlatformException catch (e) {
+      print('${e.message}');
+    }
+
+    // WidgetKitを再読み込みさせる
+
   }
 
   @override
