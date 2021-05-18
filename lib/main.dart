@@ -38,16 +38,13 @@ class _MyHomePageState extends State<MyHomePage> {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setInt('counter', _counter);
 
-    // Swiftへメソッド実行を依頼(通知)する（counterの値を保存する）
+    // Swiftのメソッド実行を依頼(通知)する（counterの値を保存する）
     try {
       final result = await _methodChannel.invokeMethod('setCounterForWidgetKit');
       print(result);
     } on PlatformException catch (e) {
       print('${e.message}');
     }
-
-    // WidgetKitを再読み込みさせる
-
   }
 
   @override
