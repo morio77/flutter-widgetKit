@@ -14,13 +14,13 @@ import WidgetKit
                                        binaryMessenger: controller.binaryMessenger)
     channel.setMethodCallHandler({
         (call: FlutterMethodCall, result: @escaping FlutterResult) -> Void in
-
-        guard call.method == "setCounterForWidgetKit" else {
-            result(FlutterMethodNotImplemented)
-            return
+        
+        if call.method == "setCounterForWidgetKit" {
+            self.setUserDefaultsForAppGroup(result: result)
         }
         
-        self.setUserDefaultsForAppGroup(result: result)
+        result(FlutterMethodNotImplemented)
+        return
     })
     
     GeneratedPluginRegistrant.register(with: self)
