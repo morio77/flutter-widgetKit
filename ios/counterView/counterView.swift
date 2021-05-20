@@ -59,7 +59,7 @@ struct counterViewEntryView : View {
     var entry: Provider.Entry
 
     var body: some View {
-        Text(String(entry.counter))
+        Text(String(entry.counter)).font(.system(size: 100))
     }
 }
 
